@@ -1,9 +1,50 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pyhsms/app_data/app_colors.dart';
 import 'package:pyhsms/modules/home_page/v_home_page.dart';
+
+void superPrint(var content, {var title = 'Super Print'}) {
+  String callerFrame = '';
+
+  if (kDebugMode) {
+    try {
+      final stackTrace = StackTrace.current;
+      final frames = stackTrace.toString().split("\n");
+      callerFrame = frames[1];
+    } catch (e1,e2) {
+      debugPrint(e1.toString(), wrapWidth: 1024);
+    }
+
+    DateTime dateTime = DateTime.now();
+    String dateTimeString =
+        '${dateTime.hour} : ${dateTime.minute} : ${dateTime.second}.${dateTime.millisecond}';
+    debugPrint('', wrapWidth: 1024);
+    debugPrint(
+        '- ${title.toString()} - ${callerFrame.split('(').last.replaceAll(')', '')}',
+        wrapWidth: 1024);
+    debugPrint('____________________________');
+    try {
+      debugPrint(
+          const JsonEncoder.withIndent('  ')
+              .convert(const JsonDecoder().convert(content)),
+          wrapWidth: 1024);
+    } catch (e1,e2) {
+      try {
+        debugPrint(
+            const JsonEncoder.withIndent('  ')
+                .convert(const JsonDecoder().convert(jsonEncode(content))),
+            wrapWidth: 1024);
+      } catch (e1,e2) {
+        debugPrint(content.toString());
+      }
+    }
+    debugPrint('____________________________ $dateTimeString');
+  }
+}
 
 
 void main() async {
