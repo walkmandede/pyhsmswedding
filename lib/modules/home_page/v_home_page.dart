@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
           backgroundColor: AppColors.brown,
           elevation: 1,
           title: const Text(
-            "Phyo Ye & Shwe Mhone",
+            "Phyo Ye & Shwe Hmone",
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.w600
