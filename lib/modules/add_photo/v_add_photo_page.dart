@@ -36,11 +36,11 @@ class AddPhotoPage extends StatelessWidget {
                 width: double.infinity,
                 height: double.infinity,
                 decoration: BoxDecoration(
-                    color: AppColors.orange.withOpacity(0.3)
+                    color: AppColors.orange.withOpacity(0.2)
                 ),
                 alignment: Alignment.center,
                 child: CupertinoActivityIndicator(
-                  color: AppColors.white,
+                  color: AppColors.green,
                 ),
               );
             }
@@ -54,7 +54,17 @@ class AddPhotoPage extends StatelessWidget {
                   child: LayoutBuilder(
                     builder: (a1, c1) {
                       final widget = Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          TextField(
+                            controller: controller.txtName,
+                            decoration: const InputDecoration(
+                              label: Text("Your name")
+                            ),
+                          ),
+                          const SizedBox(height: 10,),
+                          const Text("Upload your photo with us!"),
+                          const SizedBox(height: 5,),
                           AspectRatio(
                             aspectRatio: 1,
                             child: ValueListenableBuilder(

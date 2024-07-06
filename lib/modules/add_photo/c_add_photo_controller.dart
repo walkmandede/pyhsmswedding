@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pyhsms/main.dart';
+import 'package:pyhsms/modules/congratulation/v_congratulation_page.dart';
 import 'package:pyhsms/modules/home_page/c_home_page.dart';
 import 'package:pyhsms/modules/home_page/v_home_page.dart';
 import 'package:pyhsms/services/network_services/api_response.dart';
@@ -13,6 +15,7 @@ class AddPhotoController extends GetxController{
 
   ValueNotifier<XFile?> currentImage = ValueNotifier(null);
   ValueNotifier<bool> xLoading = ValueNotifier(false);
+  TextEditingController txtName = TextEditingController(text: "");
   
   @override
   void onInit() {
@@ -39,12 +42,17 @@ class AddPhotoController extends GetxController{
   }
 
   Future<void> uploadPhoto() async{
+    if(txtName.text.isEmpty){
+      Get.showSnackbar(const GetSnackBar(
+        title: "Unable to upload photo!",
+        message: "Please enter your name.",
+        duration: const Duration(seconds: 2),
+      ));
+      return;
+    }
     xLoading.value = true;
     try{
-
       if(currentImage.value != null){
-        print(currentImage.value!.path);
-        print((await currentImage.value!.readAsBytes() as List<int>).length);
         Response? response = await ApiService().formDataPost(
             endPoint: "http://209.97.163.144:3001/upload",
             // endPoint: "http://192.168.100.32:3001/upload",
@@ -58,12 +66,11 @@ class AddPhotoController extends GetxController{
             }
         );
         final apiResponse = ApiService().validateResponse(response: response);
-        print(apiResponse.statusCode);
-        print(apiResponse.bodyData);
         if(apiResponse.statusCode == 200 || apiResponse.statusCode == 201){
           HomePageController homePageController = Get.find();
           homePageController.initLoad();
           Get.back();
+          Get.to(()=> CongratulationPage(name: txtName.text,image: apiResponse.bodyData['path'].toString(),));
         }
         else{
           Get.showSnackbar(const GetSnackBar(

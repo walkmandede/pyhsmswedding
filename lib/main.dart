@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pyhsms/app_data/app_colors.dart';
+import 'package:pyhsms/modules/congratulation/v_congratulation_page.dart';
 import 'package:pyhsms/modules/home_page/v_home_page.dart';
 
 void superPrint(var content, {var title = 'Super Print'}) {

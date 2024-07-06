@@ -34,13 +34,13 @@ class HomePage extends StatelessWidget {
           },
           backgroundColor: AppColors.brown,
           label: const Text(
-            "Be the part of our day",
+            "Join our gallery",
             style: TextStyle(
               fontWeight: FontWeight.w600,
               color: Colors.black
             ),
           ),
-          icon: const Icon(Icons.add,color: Colors.black,),
+          icon: const Icon(Icons.image_rounded,color: Colors.black,),
         ),
         body: SizedBox.expand(
           child: ValueListenableBuilder(
